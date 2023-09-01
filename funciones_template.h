@@ -6,12 +6,10 @@
 #define PROG3_SEC2_2023_2_TEMPLATE_FUNCIONES_FUNCIONES_TEMPLATE_H
 
 #include <iostream>
+#include <tuple>
 using namespace std;
 
-template<typename T>
-void print(T first) {
-    cout << first;
-}
+void print() {}
 
 template<typename T, typename ...Package>
 void print(T first, Package... params) {
@@ -19,6 +17,34 @@ void print(T first, Package... params) {
     cout << first << " ";
     print(params...);
 }
+
+
+template<typename T, typename ...Package>
+void print2(T first, Package... params) {
+    cout << first << " ";
+    auto t = tuple<Package...>(params...);
+    if constexpr (sizeof...(params) != 0) {
+        cout << std::get<0>(t) << " ";
+        print2(params...);
+    }
+}
+
+template<typename ...Package>
+void print3(Package... params) {
+    ((cout << params << " "), ...);
+}
+
+template<typename ...Package>
+auto sumar(Package... params) {
+    return (params + ...);
+}
+
+template<typename T = int, typename ...Package>
+T multiplicar(Package... params) {
+    return (params * ...);
+}
+
+
 
 
 
